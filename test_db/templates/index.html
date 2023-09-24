@@ -1,0 +1,33 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+    <form action="calculate" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-group" style="color:red;">
+            하단 버튼을 통해 파일을 업로드 해주세요.<br><br>
+            <input id="fileInput" name="fileInput" type="file" style="color:black;">
+            <p></p><input type="submit" value="파일 업로드">
+        </div>
+    </form>
+    {% if document %}
+        <a>업로드 확인👇🏻</a>
+        <p></p>
+        <img src="{{ document.file_path.url }}" width=300 height=200 >
+        <form action="detect" method="POST">
+            {% csrf_token %}
+            <a style="color:red;">모델학습을 눌러주세요</a>
+            <input type="hidden" id="file_id" name="file_id" value="{{document.id}}"/>
+            <p></p><button type="submit">모델 학습</button>
+        </form>
+    {% endif %}
+    {% if findeep %}
+    <a>결과 확인👇🏻</a>
+    <p></p>
+    <img src="{{ findeep.file_path.url }}" width=300 height=200>
+    {% endif %}
+
+    
+</body>
